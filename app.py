@@ -17,9 +17,6 @@ def help(update, context):
 def echo(update, context):
     update.message.reply_text("No entendi :v")
 
-def error(update, context):
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
-
 def main():
     """Start the bot."""
 
@@ -40,9 +37,6 @@ dp.add_handler(CommandHandler("help", help))
 
 #On non command...
 dp.add_handler(MessageHandler(Filters.text, echo))
-
-#Log all errors
-dp.add_error_handler(error)
 
 #Start the bot
 updater.start_polling()
