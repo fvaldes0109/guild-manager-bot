@@ -1,7 +1,7 @@
 import logging
 import os
-import mysql.connector
 import texts
+from modules import db_func
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import telepot
@@ -16,17 +16,19 @@ def help(update, context):
     update.message.reply_text(texts.help)
 
 def echo(update, context):
-    update.message.reply_text("No entendi :v")
+    chat_id = update.message.chat_id
+    if chat_id > 0: #If is in PM
+        msg = update.message.text
+        #Check if its forwarded from CWbot
+        if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
+            if "Battle of the seven castles in" in msg: #Its a /me
+                db_func.addPlayer(chat_id, msg) #Add player to database
+            
 
 def main():
     """Start the bot."""
 
-mydb = mysql.connector.connect(
-    host = os.environ['dbhost'],
-    user = os.environ['dbuser'],
-    password = os.environ['dbpassword'],
-    database = os.environ['dbname']
-)
+db_func.dbConnect()
 
 bot = telepot.Bot(os.environ['TOKEN'])
 updater = Updater(os.environ['TOKEN'], use_context = True)
