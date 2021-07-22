@@ -28,8 +28,6 @@ def echo(update, context):
 def main():
     """Start the bot."""
 
-db_func.dbConnect()
-
 bot = telepot.Bot(os.environ['TOKEN'])
 updater = Updater(os.environ['TOKEN'], use_context = True)
 
