@@ -1,5 +1,6 @@
 import logging
 import os
+import mysql.connector;
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import telepot
@@ -21,6 +22,13 @@ def error(update, context):
 
 def main():
     """Start the bot."""
+
+mydb = mysql.connector.connect(
+    host = os.environ['dbhost'],
+    user = os.environ['dbuser'],
+    password = os.environ['dbpassword'],
+    database = os.environ['dbname']
+)
 
 bot = telepot.Bot(os.environ['TOKEN'])
 updater = Updater(os.environ['TOKEN'], use_context = True)
