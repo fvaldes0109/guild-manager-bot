@@ -1,6 +1,7 @@
 import logging
 import os
-import mysql.connector;
+import mysql.connector
+import texts
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import telepot
@@ -9,10 +10,10 @@ logging.basicConfig(format = '%(asctime)s - %(levelname)s - %(message)s', level 
 logger = logging.getLogger(__name__)
 
 def start(update, context):
-    update.message.reply_text("Has iniciado el bot")
+    update.message.reply_text(texts.start)
 
 def help(update, context):
-    update.message.reply_text("Esta es la ayuda")
+    update.message.reply_text(texts.help)
 
 def echo(update, context):
     update.message.reply_text("No entendi :v")
