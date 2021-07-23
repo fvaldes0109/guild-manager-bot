@@ -29,12 +29,13 @@ def getBattleDate(date):
     return reportDate
 
 def getNextWipe():
-    current = datetime.today()
+    current = datetime.today().astimezone(pytz.timezone('America/Havana'))
     weekday = current.weekday()
     diff = 6 - weekday
     if diff == 0 and current.hour >= 20:
         diff = 7
-    nextPoint = current.replace(hour = 20, minute = 0, second = 0, microsecond = 0) + timedelta(days = diff)
+    nextPoint = (current.replace(hour = 20, minute = 0, second = 0, microsecond = 0) + timedelta(days = diff)) - current
+    print(nextPoint)
     return nextPoint
 
 def wipeReports():
