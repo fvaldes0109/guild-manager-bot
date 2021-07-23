@@ -68,3 +68,10 @@ def reportStored(id, date, ptr):
         return False
     else:
         return True
+
+def weeklyWipeReports():
+    ptr = dbConnect()
+    query = "DELETE FROM reports"
+    ptr[1].execute(query)
+    ptr[0].commit()
+    dbClose(ptr)
