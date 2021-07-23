@@ -20,7 +20,8 @@ def echo(update, context):
     #Check if its forwarded from CWbot
     if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
         if "Your result on the battlefield:" in msg: #Its a /report
-            db_func.addReport(chat_id, msg)
+            battleDate = date_check.getBattleDate(update.message.forward_date)
+            db_func.addReport(chat_id, msg, battleDate)
     if chat_id > 0: #If is in PM
         #Check if its forwarded from CWbot
         if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
