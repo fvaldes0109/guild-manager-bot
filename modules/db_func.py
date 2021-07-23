@@ -19,8 +19,23 @@ def dbClose(ptr):
 def addPlayer(id, me_msg):
     ptr = dbConnect()
     playerData = str_search.dataFromMe(me_msg)
-    query = "INSERT INTO players VALUES (%s, %s, %s, %s)"
-    val = (id, playerData[0], playerData[1], playerData[2])
+    query = ""
+    val = ""
+    if searchPlayer(id, playerData, ptr) == False:
+        query = "INSERT INTO players VALUES (%s, %s, %s, %s)"
+        val = (id, playerData[0], playerData[1], playerData[2])
+    else:
+        query = "UPDATE players SET guild = %s, playername = %s, class = %s WHERE id = %s"
+        val = (playerData[0], playerData[1], playerData[2], id)
     ptr[1].execute(query, val)
     ptr[0].commit()
     dbClose(ptr)
+        
+def searchPlayer(id, playerData, ptr):
+    query = "SELECT id FROM players WHERE id = '" + str(id) + "'"
+    ptr[1].execute(query)
+    result = ptr[1].fetchall()
+    if len(result) == 0:
+        return False
+    else:
+        return True
