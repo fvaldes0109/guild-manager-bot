@@ -45,3 +45,14 @@ def getClass(msg):
     if pos != -1:
         return [pos - 1, "Esquire"]
     return [fpos, ""]
+
+def dataFromReport(msg):
+    exp_pos = msg.find("Exp: ")
+    exp_end = msg.find("\n", exp_pos)
+    exp = msg[exp_pos + 5 : exp_end]
+    gold_pos = msg.find("Gold: ")
+    gold_end = msg.find("\n", gold_pos)
+    if gold_end == -1: #If the 'Gold: X' is the last line, there will be no \n at the end
+        gold_end = len(msg)
+    gold = msg[gold_pos + 6 : gold_end]
+    return [exp, gold]
