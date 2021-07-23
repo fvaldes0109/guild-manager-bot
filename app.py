@@ -15,24 +15,27 @@ def help(update, context):
     update.message.reply_text(texts.help)
 
 def reports(update, context):
-    attendance = db_func.getAttendance(update.message.chat_id)
+    user_id = update.message.from_user.id
+    chat_id = update.message.chat_id
+    attendance = db_func.getAttendance(user_id)
     msg = texts.attendance(attendance[0], attendance[1], date_check.getBattleCount())
-    bot.sendMessage(update.message.chat_id, msg, parse_mode = "HTML")
+    bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
 def echo(update, context):
     chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
     msg = update.message.text
     #Check if its forwarded from CWbot
     if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
         if "Your result on the battlefield:" in msg: #Its a /report
             battleDate = date_check.getBattleDate(update.message.forward_date)
-            db_func.addReport(chat_id, msg, battleDate)
+            db_func.addReport(user_id, msg, battleDate)
     if chat_id > 0: #If is in PM
         #Check if its forwarded from CWbot
         if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
             if "Battle of the seven castles in" in msg: #Its a /me
                 if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ago
-                    db_func.addPlayer(chat_id, msg) #Add player to database
+                    db_func.addPlayer(user_id, msg) #Add player to database
             
 def main():
     """Start the bot."""
