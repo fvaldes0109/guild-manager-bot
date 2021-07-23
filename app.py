@@ -1,7 +1,6 @@
 import logging
 import os
-import texts
-from modules import db_func
+from modules import db_func, texts
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import telepot
