@@ -14,6 +14,11 @@ def start(update, context):
 def help(update, context):
     update.message.reply_text(texts.help)
 
+def reports(update, context):
+    attendance = db_func.getAttendance(update.message.chat_id)
+    msg = texts.attendance(attendance[0], attendance[1], date_check.getBattleCount())
+    bot.sendMessage(update.message.chat_id, msg, parse_mode = "HTML")
+
 def echo(update, context):
     chat_id = update.message.chat_id
     msg = update.message.text
@@ -41,6 +46,7 @@ dp = updater.dispatcher
 
 dp.add_handler(CommandHandler("start", start))
 dp.add_handler(CommandHandler("help", help))
+dp.add_handler(CommandHandler("reports", reports))
 
 #On non command...
 dp.add_handler(MessageHandler(Filters.text, echo))

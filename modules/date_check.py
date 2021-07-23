@@ -35,7 +35,6 @@ def getNextWipe():
     if diff == 0 and current.hour >= 20:
         diff = 7
     nextPoint = (current.replace(hour = 20, minute = 0, second = 0, microsecond = 0) + timedelta(days = diff)) - current
-    print(nextPoint)
     return nextPoint
 
 def wipeReports():
@@ -49,4 +48,21 @@ def startTimers():
     wipe_timer = Timer(nextWipe.total_seconds(), wipeReports)
     wipe_timer.start()
 
-    
+def getBattleCount():
+    current = datetime.today().astimezone(pytz.timezone('America/Havana'))
+    weekday = current.weekday()
+    hour = current.hour
+    ind = 0
+    if hour < 3:
+        ind = 0
+    elif hour < 11:
+        ind = 1
+    elif hour < 19:
+        ind = 2
+    else:
+        ind = 3
+    if weekday == 6 and hour > 20:
+        return 0
+    else:
+        count = weekday * 3 + ind
+        return count
