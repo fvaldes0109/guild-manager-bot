@@ -1,3 +1,5 @@
+import emoji
+
 def dataFromMe(me_msg):
     pos = me_msg.find("Level: ")
     chop = me_msg[:pos - 2]
@@ -55,4 +57,8 @@ def dataFromReport(msg):
     if gold_end == -1: #If the 'Gold: X' is the last line, there will be no \n at the end
         gold_end = len(msg)
     gold = msg[gold_pos + 6 : gold_end]
-    return [exp, gold]
+    #Get guild and name to check autenticity:
+    guild = getGuild(msg)
+    pos_end = msg.find(emoji.emojize(":crossed_swords:")) - 1
+    name = msg[guild[0] : pos_end]
+    return [exp, gold, guild[1], name]

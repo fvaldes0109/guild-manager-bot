@@ -44,8 +44,19 @@ def addReport(id, report_msg):
     ptr = dbConnect()
     if searchPlayer(id, ptr) == True: #Only register report if the player is registered
         reportData = str_search.dataFromReport(report_msg)
-        query = "INSERT INTO reports(player_id, exp, gold) VALUES (%s, %s, %s)"
-        val = (id, reportData[0], reportData[1])
-        ptr[1].execute(query, val)
-        ptr[0].commit()
-        dbClose(ptr)
+        if samePlayer(reportData[2], reportData[3], ptr):
+            query = "INSERT INTO reports(player_id, exp, gold) VALUES (%s, %s, %s)"
+            val = (id, reportData[0], reportData[1])
+            ptr[1].execute(query, val)
+            ptr[0].commit()
+            dbClose(ptr)
+
+def samePlayer(guild, name, ptr):
+    query = "SELECT * FROM players WHERE guild = '" + guild + "' AND playername = '" + name + "'"
+    print(query)
+    ptr[1].execute(query)
+    result = ptr[1].fetchall()
+    if len(result) == 0:
+        return False
+    else:
+        return True
