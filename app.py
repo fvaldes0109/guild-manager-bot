@@ -1,6 +1,6 @@
 import logging
 import os
-from modules import db_func, texts
+from modules import db_func, texts, date_check
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import telepot
@@ -21,9 +21,9 @@ def echo(update, context):
         #Check if its forwarded from CWbot
         if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
             if "Battle of the seven castles in" in msg: #Its a /me
-                db_func.addPlayer(chat_id, msg) #Add player to database
+                if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ago
+                    db_func.addPlayer(chat_id, msg) #Add player to database
             
-
 def main():
     """Start the bot."""
 
