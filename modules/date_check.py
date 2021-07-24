@@ -35,8 +35,6 @@ def getNextWipe():
     if diff == 0 and current.hour >= 20:
         diff = 7
     nextPoint = (current.replace(hour = 20, minute = 0, second = 0, microsecond = 0) + timedelta(days = diff)) - current
-    print("Currently:", current)
-    print("Next:", nextPoint)
     return nextPoint
 
 def wipeReports(callback):
