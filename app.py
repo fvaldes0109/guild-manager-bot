@@ -21,6 +21,13 @@ def reports(update, context):
     msg = texts.attendance(attendance[0], attendance[1], date_check.getBattleCount())
     bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
+def reports_exp(update, context):
+    user_id = update.message.from_user.id
+    chat_id = update.message.chat_id
+    exp = db_func.getExp(user_id)
+    msg = texts.expReports(exp[0], exp[1])
+    bot.sendMessage(chat_id, msg, parse_mode = "HTML")
+
 def echo(update, context):
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
@@ -50,6 +57,7 @@ dp = updater.dispatcher
 dp.add_handler(CommandHandler("start", start))
 dp.add_handler(CommandHandler("help", help))
 dp.add_handler(CommandHandler("reports", reports))
+dp.add_handler(CommandHandler("reports_exp", reports_exp))
 
 #On non command...
 dp.add_handler(MessageHandler(Filters.text, echo))

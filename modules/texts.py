@@ -18,4 +18,13 @@ def attendance(guild, att, count):
         msg = msg + str(count) + " (" + str(percent) + "%)\n"
         i = i + 1
     return msg
+
+def expReports(guild, l):
+    msg = emoji.emojize(":fire:<b><u>Experiencia de la semana [" + guild + "]</u></b>\n\n")
+    l.sort(reverse = True, key = comp)
+    i = 1
+    for pair in l:
+        msg = msg + emoji.emojize(str(i) + ". " + pair[0] + " - :fire:" + str(pair[1]) + "\n")
+        i = i + 1
+    return msg
         
