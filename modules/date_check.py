@@ -34,14 +34,12 @@ def getNextWipe():
     diff = 6 - weekday
     if diff == 0 and current.hour >= 23 and current.minute >= 50:
         diff = 7
-    #nextPoint = (current.replace(hour = 23, minute = 50, second = 0, microsecond = 0) + timedelta(days = diff)) - current
-    nextPoint = timedelta(seconds = 50)
-    print(nextPoint)
+    nextPoint = (current.replace(hour = 23, minute = 50, second = 0, microsecond = 0) + timedelta(days = diff)) - current
     return nextPoint
 
 def wipeReports(callback):
-    #callback()
-    #db_func.weeklyWipeReports()
+    callback()
+    db_func.weeklyWipeReports()
     nextWipe = getNextWipe()
     wipe_timer = Timer(nextWipe.total_seconds(), wipeReports, [callback])
     wipe_timer.start()
