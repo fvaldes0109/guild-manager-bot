@@ -1,3 +1,5 @@
 emoji==1.2.0
+mysql-connector-python==8.0.26
+mysqlclient==1.4.4
 python-telegram-bot==13.5
 telepot==12.7
