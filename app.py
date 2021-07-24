@@ -50,12 +50,9 @@ def echo(update, context):
             #Check if its forwarded from CWbot
             if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
                 if "Battle of the seven castles in" in msg: #Its a /me
-                    if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ago
-                        if "[LAW]" not in msg:
-                            bot.sendMessage(user_id, "No eres del gremio de los elegidos... SHUUUUUU!!!")
-                        else:
-                            db_func.addPlayer(user_id, msg) #Add player to database
-                            bot.sendMessage(user_id, "Registrado con exito!")
+                    if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ag0 
+                        db_func.addPlayer(user_id, msg) #Add player to database
+                        bot.sendMessage(user_id, "Registrado con exito!")
                     else:
                         bot.sendMessage(user_id, "Este /me es muy antiguo. Por favor envia otro")
             
