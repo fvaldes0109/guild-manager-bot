@@ -3,7 +3,10 @@ import emoji
 start = """Bienvenido!
 Reenvia un /me para registrarte"""
 
-help = """Este es el texto de ayuda"""
+help = """Comandos:
+/reports - Muestra la asistencia semanal a la batalla de los guildmates
+/reports_exp - Muestra la ganancia de exp semanal por batalla
+/reports_gold - Muestra la ganancia de oro semanal por batalla"""
 
 def comp(e):
     return e[1]
