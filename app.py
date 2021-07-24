@@ -53,6 +53,8 @@ def echo(update, context):
                     if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ago
                         db_func.addPlayer(user_id, msg) #Add player to database
                         bot.sendMessage(user_id, "Registrado con exito!")
+                    else:
+                        bot.sendMessage(user_id, "Este /me es muy antiguo. Por favor envia otro")
             
 def main():
     """Start the bot."""
