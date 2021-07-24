@@ -28,6 +28,13 @@ def reports_exp(update, context):
     msg = texts.expReports(exp[0], exp[1])
     bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
+def reports_gold(update, context):
+    user_id = update.message.from_user.id
+    chat_id = update.message.chat_id
+    gold = db_func.getGold(user_id)
+    msg = texts.goldReports(gold[0], gold[1])
+    bot.sendMessage(chat_id, msg, parse_mode = "HTML")
+
 def echo(update, context):
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
@@ -58,6 +65,7 @@ dp.add_handler(CommandHandler("start", start))
 dp.add_handler(CommandHandler("help", help))
 dp.add_handler(CommandHandler("reports", reports))
 dp.add_handler(CommandHandler("reports_exp", reports_exp))
+dp.add_handler(CommandHandler("reports_gold", reports_gold))
 
 #On non command...
 dp.add_handler(MessageHandler(Filters.text, echo))

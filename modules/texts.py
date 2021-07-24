@@ -27,4 +27,13 @@ def expReports(guild, l):
         msg = msg + emoji.emojize(str(i) + ". " + pair[0] + " - :fire:" + str(pair[1]) + "\n")
         i = i + 1
     return msg
+
+def goldReports(guild, l):
+    msg = emoji.emojize(":money_bag:<b><u>Oro de la semana [" + guild + "]</u></b>\n\n")
+    l.sort(reverse = True, key = comp)
+    i = 1
+    for pair in l:
+        msg = msg + emoji.emojize(str(i) + ". " + pair[0] + " - :money_bag:" + str(pair[1]) + "\n")
+        i = i + 1
+    return msg
         

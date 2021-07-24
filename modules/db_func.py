@@ -103,3 +103,17 @@ def getExp(id):
     result = ptr[1].fetchall()
     dbClose(ptr)
     return [guild, result]
+
+def getGold(id):
+    ptr = dbConnect()
+    query = "SELECT guild FROM players WHERE player_id ='" + str(id) + "'"
+    ptr[1].execute(query)
+    result = ptr[1].fetchall()
+    guild = result[0][0]
+    query = "SELECT playername, SUM(gold) FROM players, reports "
+    query = query + "WHERE players.player_id = reports.player_id AND players.guild = '" + guild
+    query = query + "' GROUP BY playername"
+    ptr[1].execute(query)
+    result = ptr[1].fetchall()
+    dbClose(ptr)
+    return [guild, result]
