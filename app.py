@@ -52,6 +52,7 @@ def echo(update, context):
                 if "Battle of the seven castles in" in msg: #Its a /me
                     if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ago
                         db_func.addPlayer(user_id, msg) #Add player to database
+                        bot.sendMessage(user_id, "Registrado con exito!")
             
 def main():
     """Start the bot."""
