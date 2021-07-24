@@ -20,7 +20,8 @@ def reports(update, context):
     chat_id = update.message.chat_id
     attendance = db_func.getAttendance(user_id)
     msg = texts.attendance(attendance[0], attendance[1], date_check.getBattleCount())
-    bot.sendMessage(chat_id, msg, parse_mode = "HTML")
+    print(msg)
+    #bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
 def reports_exp(update, context):
     user_id = update.message.from_user.id
