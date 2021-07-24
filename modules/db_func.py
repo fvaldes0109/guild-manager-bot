@@ -3,7 +3,7 @@ import MySQLdb
 import os
 
 def dbConnect():
-    mydb = mysql.connector.connect(
+    mydb = MySQLdb.connect(
     host = os.environ['dbhost'],
     user = os.environ['dbuser'],
     password = os.environ['dbpassword'],
