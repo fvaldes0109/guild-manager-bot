@@ -10,6 +10,7 @@ def comp(e):
 
 def attendance(guild, att, count):
     msg = emoji.emojize(":crossed_swords:<b><u>Asistencia semanal de [" + guild + "]</u></b>\n\n")
+    print(att)
     att.sort(reverse = True, key = comp)
     i = 1
     for pair in att:
