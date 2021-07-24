@@ -1,5 +1,6 @@
 import logging
 import os
+import emoji
 from modules import db_func, texts, date_check
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
@@ -36,25 +37,37 @@ def reports_gold(update, context):
     bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
 def echo(update, context):
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    msg = update.message.text
-    #Check if its forwarded from CWbot
-    if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
-        if "Your result on the battlefield:" in msg: #Its a /report
-            battleDate = date_check.getBattleDate(update.message.forward_date)
-            db_func.addReport(user_id, msg, battleDate)
-    if chat_id > 0: #If is in PM
+    if update.channel_post == None:
+        chat_id = update.message.chat_id
+        user_id = update.message.from_user.id
+        msg = update.message.text
         #Check if its forwarded from CWbot
         if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
-            if "Battle of the seven castles in" in msg: #Its a /me
-                if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ago
-                    db_func.addPlayer(user_id, msg) #Add player to database
+            if "Your result on the battlefield:" in msg: #Its a /report
+                battleDate = date_check.getBattleDate(update.message.forward_date)
+                db_func.addReport(user_id, msg, battleDate)
+        if chat_id > 0: #If is in PM
+            #Check if its forwarded from CWbot
+            if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
+                if "Battle of the seven castles in" in msg: #Its a /me
+                    if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ago
+                        db_func.addPlayer(user_id, msg) #Add player to database
             
 def main():
     """Start the bot."""
 
-date_check.startTimers()
+def sendWeekReport():
+    user_id = os.environ['tempuserid']
+    attData = db_func.getAttendance(user_id)
+    expData = db_func.getGold(user_id)
+    goldData = db_func.getGold(user_id)
+    msg = emoji.emojize(":snake::snake:<b><u>REPORTE SEMANAL DE [" + attData[0] + "]</u></b>:snake::snake:\n\n")
+    msg = msg + texts.attendance(attData[0], attData[1], date_check.getBattleCount()) + "\n\n"
+    msg = msg + texts.expReports(expData[0], expData[1]) + "\n\n"
+    msg = msg + texts.goldReports(goldData[0], goldData[1])
+    bot.sendMessage(os.environ['tempchannelid'], msg, parse_mode = "HTML")
+
+date_check.startTimers(sendWeekReport)
 
 bot = telepot.Bot(os.environ['TOKEN'])
 updater = Updater(os.environ['TOKEN'], use_context = True)

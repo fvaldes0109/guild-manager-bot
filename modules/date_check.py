@@ -37,15 +37,16 @@ def getNextWipe():
     nextPoint = (current.replace(hour = 20, minute = 0, second = 0, microsecond = 0) + timedelta(days = diff)) - current
     return nextPoint
 
-def wipeReports():
+def wipeReports(callback):
+    callback()
     db_func.weeklyWipeReports()
     nextWipe = getNextWipe()
-    wipe_timer = Timer(nextWipe.total_seconds(), wipeReports)
+    wipe_timer = Timer(nextWipe.total_seconds(), wipeReports, [callback])
     wipe_timer.start()
 
-def startTimers():
+def startTimers(callback):
     nextWipe = getNextWipe()
-    wipe_timer = Timer(nextWipe.total_seconds(), wipeReports)
+    wipe_timer = Timer(nextWipe.total_seconds(), wipeReports, [callback])
     wipe_timer.start()
 
 def getBattleCount():
