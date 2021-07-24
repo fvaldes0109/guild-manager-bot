@@ -1,5 +1,5 @@
 from modules import str_search
-import mysql.connector
+import MySQLdb
 import os
 
 def dbConnect():
