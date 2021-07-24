@@ -1,0 +1,3 @@
+emoji==1.2.0
+python-telegram-bot==13.5
+telepot==12.7
