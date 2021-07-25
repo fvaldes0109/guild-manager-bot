@@ -43,7 +43,7 @@ def echo(update, context):
         msg = update.message.text
         #Check if its forwarded from CWbot
         if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
-            if "Your result on the battlefield:" in msg: #Its a /report
+            if "Your result on the battlefield:" in msg and "Encounter:" not in msg: #Its a /report
                 battleDate = date_check.getBattleDate(update.message.forward_date)
                 db_func.addReport(user_id, msg, battleDate)
         if chat_id > 0: #If is in PM
