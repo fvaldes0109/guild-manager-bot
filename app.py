@@ -32,7 +32,7 @@ def reports_exp(update, context):
 def reports_gold(update, context):
     user_id = update.message.from_user.id
     chat_id = update.message.chat_id
-    gold = db_func.getGold(user_id)
+    gold = db_func.getExp(user_id)
     msg = texts.goldReports(gold[0], gold[1])
     bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
