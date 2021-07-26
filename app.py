@@ -32,7 +32,7 @@ def reports_exp(update, context):
 def reports_gold(update, context):
     user_id = update.message.from_user.id
     chat_id = update.message.chat_id
-    gold = db_func.getExp(user_id)
+    gold = db_func.getGold(user_id)
     msg = texts.goldReports(gold[0], gold[1])
     bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
@@ -62,7 +62,7 @@ def main():
 def sendWeekReport():
     user_id = os.environ['tempuserid']
     attData = db_func.getAttendance(user_id)
-    expData = db_func.getGold(user_id)
+    expData = db_func.getExp(user_id)
     goldData = db_func.getGold(user_id)
     msg = emoji.emojize(":snake::snake:<b><u>REPORTE SEMANAL DE [" + attData[0] + "]</u></b>:snake::snake:\n\n")
     msg = msg + texts.attendance(attData[0], attData[1], date_check.getBattleCount()) + "\n\n"
