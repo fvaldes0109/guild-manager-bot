@@ -1,9 +1,9 @@
 from modules import str_search
-import MySQLdb
+import mysql.connector
 import os
 
 def dbConnect():
-    mydb = MySQLdb.connect(
+    mydb = mysql.connector.connect(
     host = os.environ['dbhost'],
     user = os.environ['dbuser'],
     password = os.environ['dbpassword'],
