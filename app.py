@@ -47,18 +47,13 @@ def echo(update, context):
                 battleDate = date_check.getBattleDate(update.message.forward_date)
                 if date_check.belongsToWeek(battleDate): #Si no es un reporte antiguo
                     db_func.addReport(user_id, msg, battleDate)
-        if chat_id > 0: #If is in PM
-            #Check if its forwarded from CWbot
-            if update.message.forward_from != None and update.message.forward_from.username == 'chtwrsbot':
+            if chat_id > 0: #If is in PM
                 if "Battle of the seven castles in" in msg: #Its a /me
                     if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ag0 
                         db_func.addPlayer(user_id, msg) #Add player to database
                         bot.sendMessage(user_id, "Registrado con exito!")
                     else:
                         bot.sendMessage(user_id, "Este /me es muy antiguo. Por favor envia otro")
-            
-def main():
-    """Start the bot."""
 
 def sendWeekReport():
     user_id = os.environ['tempuserid']
@@ -92,6 +87,3 @@ updater.start_polling()
 
 #Run the bot until you press Ctrl+C
 updater.idle()
-
-if __name__ == '__main__':
-    main()
