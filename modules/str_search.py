@@ -51,12 +51,16 @@ def getClass(msg):
 def dataFromReport(msg):
     exp_pos = msg.find("Exp: ")
     exp_end = msg.find("\n", exp_pos)
-    exp = msg[exp_pos + 5 : exp_end]
+    exp = 0
+    if exp_pos != -1:
+        exp = msg[exp_pos + 5 : exp_end]
     gold_pos = msg.find("Gold: ")
     gold_end = msg.find("\n", gold_pos)
     if gold_end == -1: #If the 'Gold: X' is the last line, there will be no \n at the end
         gold_end = len(msg)
-    gold = msg[gold_pos + 6 : gold_end]
+    gold = 0
+    if gold_pos != -1:
+        gold = msg[gold_pos + 6 : gold_end]
     #Get guild and name to check autenticity:
     guild = getGuild(msg)
     pos_end = msg.find(emoji.emojize(":crossed_swords:")) - 1

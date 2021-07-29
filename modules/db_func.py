@@ -84,7 +84,8 @@ def getAttendance(id):
     guild = result[0][0]
     query = "SELECT playername, COUNT(report_id) FROM players, reports "
     query = query + "WHERE players.player_id = reports.player_id AND players.guild = '" + guild
-    query = query + "' GROUP BY playername"
+    query = query + "' and exp != 0"
+    query = query + " GROUP BY playername"
     ptr[1].execute(query)
     result = ptr[1].fetchall()
     dbClose(ptr)
@@ -98,7 +99,8 @@ def getExp(id):
     guild = result[0][0]
     query = "SELECT playername, SUM(exp) FROM players, reports "
     query = query + "WHERE players.player_id = reports.player_id AND players.guild = '" + guild
-    query = query + "' GROUP BY playername"
+    query = query + "' and exp != 0"
+    query = query + " GROUP BY playername"
     ptr[1].execute(query)
     result = ptr[1].fetchall()
     dbClose(ptr)
