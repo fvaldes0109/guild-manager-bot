@@ -82,7 +82,9 @@ def dataStored(id, date, ptr, table):
 def weeklyWipeReports():
     ptr = dbConnect()
     query = "DELETE FROM reports"
+    intquery = "DELETE FROM intervenes"
     ptr[1].execute(query)
+    ptr[1].execute(intquery)
     ptr[0].commit()
     dbClose(ptr)
 
