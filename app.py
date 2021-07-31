@@ -71,10 +71,12 @@ def sendWeekReport():
     attData = db_func.getAttendance(user_id)
     expData = db_func.getExp(user_id)
     goldData = db_func.getGold(user_id)
+    forayData = db_func.getForays(user_id)
     msg = emoji.emojize(":snake::snake:<b><u>REPORTE SEMANAL DE [" + attData[0] + "]</u></b>:snake::snake:\n\n")
     msg = msg + texts.attendance(attData[0], attData[1], date_check.getBattleCount()) + "\n\n"
     msg = msg + texts.expReports(expData[0], expData[1]) + "\n\n"
-    msg = msg + texts.goldReports(goldData[0], goldData[1])
+    msg = msg + texts.goldReports(goldData[0], goldData[1]) + "\n\n"
+    msg = msg + texts.forayReports(forayData[0], forayData[1])
     bot.sendMessage(os.environ['tempchannelid'], msg, parse_mode = "HTML")
 
 date_check.startTimers(sendWeekReport)
