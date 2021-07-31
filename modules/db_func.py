@@ -44,9 +44,19 @@ def addReport(id, report_msg, date):
     ptr = dbConnect()
     if searchPlayer(id, ptr) == True: #Only register report if the player is registered
         reportData = str_search.dataFromReport(report_msg)
-        if samePlayer(reportData[2], reportData[3], ptr) and reportStored(id, date, ptr) == False:
+        if samePlayer(reportData[2], reportData[3], ptr) and dataStored(id, date, ptr, "reports") == False:
             query = "INSERT INTO reports(player_id, exp, gold, date) VALUES (%s, %s, %s, %s)"
             val = (id, reportData[0], reportData[1], date)
+            ptr[1].execute(query, val)
+            ptr[0].commit()
+            dbClose(ptr)
+
+def addInt(id, date):
+    ptr = dbConnect()
+    if searchPlayer(id, ptr) == True: #Only register report if the player is registered
+        if dataStored(id, date, ptr, "intervenes") == False: #Si este intervene no esta almacenado
+            query = "INSERT INTO intervenes(player_id, date) VALUES (%s, %s)"
+            val = (id, date)
             ptr[1].execute(query, val)
             ptr[0].commit()
             dbClose(ptr)
@@ -60,8 +70,8 @@ def samePlayer(guild, name, ptr):
     else:
         return True
 
-def reportStored(id, date, ptr):
-    query = "SELECT * FROM reports WHERE player_id = '" + str(id) + "' AND date = '" + date + "'"
+def dataStored(id, date, ptr, table):
+    query = "SELECT * FROM " + table + " WHERE player_id = '" + str(id) + "' AND date = '" + date + "'"
     ptr[1].execute(query)
     result = ptr[1].fetchall()
     if len(result) == 0:
@@ -114,6 +124,20 @@ def getGold(id):
     guild = result[0][0]
     query = "SELECT playername, SUM(gold) FROM players, reports "
     query = query + "WHERE players.player_id = reports.player_id AND players.guild = '" + guild
+    query = query + "' GROUP BY playername"
+    ptr[1].execute(query)
+    result = ptr[1].fetchall()
+    dbClose(ptr)
+    return [guild, result]
+
+def getForays(id):
+    ptr = dbConnect()
+    query = "SELECT guild FROM players WHERE player_id ='" + str(id) + "'"
+    ptr[1].execute(query)
+    result = ptr[1].fetchall()
+    guild = result[0][0]
+    query = "SELECT playername, COUNT(intervene_id) FROM players, intervenes "
+    query = query + "WHERE players.player_id = intervenes.player_id AND players.guild = '" + guild
     query = query + "' GROUP BY playername"
     ptr[1].execute(query)
     result = ptr[1].fetchall()

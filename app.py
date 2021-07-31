@@ -36,6 +36,13 @@ def reports_gold(update, context):
     msg = texts.goldReports(gold[0], gold[1])
     bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
+def forays_stopped(update, context):
+    user_id = update.message.from_user.id
+    chat_id = update.message.chat_id
+    forays = db_func.getForays(user_id)
+    msg = texts.forayReports(forays[0], forays[1])
+    bot.sendMessage(chat_id, msg, parse_mode = "HTML")
+
 def echo(update, context):
     if update.channel_post == None:
         chat_id = update.message.chat_id
@@ -47,6 +54,9 @@ def echo(update, context):
                 battleDate = date_check.getBattleDate(update.message.forward_date)
                 if date_check.belongsToWeek(battleDate): #Si no es un reporte antiguo
                     db_func.addReport(user_id, msg, battleDate)
+            elif "You lift up your sword" in msg: #Es un intervene atrapado
+                intDate = date_check.getIntDate(update.message.forward_date) #Coge la fecha del intervene
+                db_func.addInt(user_id, intDate)
             if chat_id > 0: #If is in PM
                 if "Battle of the seven castles in" in msg: #Its a /me
                     if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ag0 
@@ -78,6 +88,7 @@ dp.add_handler(CommandHandler("help", help))
 dp.add_handler(CommandHandler("reports", reports))
 dp.add_handler(CommandHandler("reports_exp", reports_exp))
 dp.add_handler(CommandHandler("reports_gold", reports_gold))
+dp.add_handler(CommandHandler("forays_stopped", forays_stopped))
 
 #On non command...
 dp.add_handler(MessageHandler(Filters.text, echo))

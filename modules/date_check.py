@@ -28,6 +28,10 @@ def getBattleDate(date):
     reportDate = forward_date.strftime("%Y-%m-%d %H:%M:%S")
     return reportDate
 
+def getIntDate(date):
+    forward_date = date.astimezone(pytz.timezone('America/Havana'))
+    return forward_date.strftime("%Y-%m-%d %H:%M:%S")
+
 def belongsToWeek(date):
     lastPrevBattle = getBattleDate(getNextWipe(True))
     if(date > lastPrevBattle):

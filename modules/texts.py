@@ -43,3 +43,12 @@ def goldReports(guild, l):
         i = i + 1
     return msg
         
+def forayReports(guild, l):
+    msg = emoji.emojize(":dagger:<b><u>Forays detenidos [" + guild + "]</u></b>\n\n")
+    l = list(l)
+    l.sort(reverse = True, key = comp)
+    i = 1
+    for pair in l:
+        msg = msg + emoji.emojize(str(i) + ". " + pair[0] + " - :dagger:" + str(pair[1]) + "\n")
+        i = i + 1
+    return msg
