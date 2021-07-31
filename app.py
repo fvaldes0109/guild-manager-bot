@@ -56,7 +56,8 @@ def echo(update, context):
                     db_func.addReport(user_id, msg, battleDate)
             elif "You lift up your sword" in msg: #Es un intervene atrapado
                 intDate = date_check.getIntDate(update.message.forward_date) #Coge la fecha del intervene
-                db_func.addInt(user_id, intDate)
+                if date_check.belongsToWeek(intDate): #Si no es antiguo
+                    db_func.addInt(user_id, intDate)
             if chat_id > 0: #If is in PM
                 if "Battle of the seven castles in" in msg: #Its a /me
                     if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ag0 
