@@ -55,7 +55,7 @@ def echo(update, context):
                 if date_check.belongsToWeek(battleDate): #Si no es un reporte antiguo
                     result = db_func.addReport(user_id, msg, battleDate)
                     if result == True:
-                        bot.sendMessage(user_id, "Reporte contabilizado con exito!")
+                        bot.sendMessage(user_id, "Reporte contabilizado con éxito!")
             elif "You lift up your sword" in msg: #Es un intervene atrapado
                 intDate = date_check.getIntDate(update.message.forward_date) #Coge la fecha del intervene
                 if date_check.belongsToWeek(intDate): #Si no es antiguo
@@ -64,9 +64,9 @@ def echo(update, context):
                 if "Battle of the seven castles in" in msg: #Its a /me
                     if date_check.isRecent(update.message.forward_date) == True: #Its from less than 2 minutes ag0 
                         db_func.addPlayer(user_id, msg) #Add player to database
-                        bot.sendMessage(user_id, "Registrado con exito!")
+                        bot.sendMessage(user_id, "Registrado con éxito!")
                     else:
-                        bot.sendMessage(user_id, "Este /me es muy antiguo. Por favor envia otro")
+                        bot.sendMessage(user_id, "Este /me es muy antiguo. Por favor envía otro")
 
 def sendWeekReport():
     user_id = os.environ['tempuserid']
