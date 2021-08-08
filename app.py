@@ -53,7 +53,9 @@ def echo(update, context):
             if "Your result on the battlefield:" in msg and "Encounter:" not in msg: #Its a /report
                 battleDate = date_check.getBattleDate(update.message.forward_date)
                 if date_check.belongsToWeek(battleDate): #Si no es un reporte antiguo
-                    db_func.addReport(user_id, msg, battleDate)
+                    result = db_func.addReport(user_id, msg, battleDate)
+                    if result == True:
+                        bot.sendMessage(user_id, "Reporte contabilizado con exito!")
             elif "You lift up your sword" in msg: #Es un intervene atrapado
                 intDate = date_check.getIntDate(update.message.forward_date) #Coge la fecha del intervene
                 if date_check.belongsToWeek(intDate): #Si no es antiguo

@@ -50,6 +50,8 @@ def addReport(id, report_msg, date):
             ptr[1].execute(query, val)
             ptr[0].commit()
             dbClose(ptr)
+            return True
+    return False
 
 def addInt(id, date):
     ptr = dbConnect()
