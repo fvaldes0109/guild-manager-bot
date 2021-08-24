@@ -43,6 +43,13 @@ def forays_stopped(update, context):
     msg = texts.forayReports(forays[0], forays[1])
     bot.sendMessage(chat_id, msg, parse_mode = "HTML")
 
+def send_message(update, context):
+    spl = update.message.text.split(' ')
+    destiny_id = spl[1]
+    text = spl[2:]
+    result = ' '.join(text)
+    bot.sendMessage(destiny_id, result)
+
 def echo(update, context):
     if update.channel_post == None:
         chat_id = update.message.chat_id
@@ -94,6 +101,7 @@ dp.add_handler(CommandHandler("reports", reports))
 dp.add_handler(CommandHandler("reports_exp", reports_exp))
 dp.add_handler(CommandHandler("reports_gold", reports_gold))
 dp.add_handler(CommandHandler("forays_stopped", forays_stopped))
+dp.add_handler(CommandHandler("send_message", send_message))
 
 #On non command...
 dp.add_handler(MessageHandler(Filters.text, echo))
