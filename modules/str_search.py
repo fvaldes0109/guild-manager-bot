@@ -65,4 +65,6 @@ def dataFromReport(msg):
     guild = getGuild(msg)
     pos_end = msg.find(emoji.emojize(":crossed_swords:")) - 1
     name = msg[guild[0] : pos_end]
+    if name[0] == emoji.emojize(':reminder_ribbon:'):
+        name = name[1:]
     return [exp, gold, guild[1], name]
