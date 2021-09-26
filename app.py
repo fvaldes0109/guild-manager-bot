@@ -62,7 +62,9 @@ def echo(update, context):
                 if date_check.belongsToWeek(battleDate): #Si no es un reporte antiguo
                     result = db_func.addReport(user_id, msg, battleDate)
                     if result == True:
-                        bot.sendMessage(user_id, "Reporte contabilizado con éxito!")
+                        bot.sendMessage(user_id, emoji.emojize(":check_mark_button:Reporte contabilizado con éxito!"))
+                else:
+                    bot.sendMessage(user_id, emoji.emojize(":cross_mark:Este reporte es muy antiguo"))
             elif "You lift up your sword" in msg: #Es un intervene atrapado
                 intDate = date_check.getIntDate(update.message.forward_date) #Coge la fecha del intervene
                 if date_check.belongsToWeek(intDate): #Si no es antiguo
