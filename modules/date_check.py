@@ -16,15 +16,15 @@ def getBattleDate(date):
     forward_date = date.astimezone(pytz.timezone('America/Havana'))
     hour = forward_date.hour
     forward_date = forward_date.replace(minute = 0, second = 0)
-    if hour < 3:
-        forward_date = forward_date.replace(hour = 19)
+    if hour < 2:
+        forward_date = forward_date.replace(hour = 18)
         forward_date = forward_date - timedelta(days = 1)
-    elif hour < 11:
-        forward_date = forward_date.replace(hour = 3)
-    elif hour < 19:
-        forward_date = forward_date.replace(hour = 11)
+    elif hour < 10:
+        forward_date = forward_date.replace(hour = 2)
+    elif hour < 18:
+        forward_date = forward_date.replace(hour = 10)
     else:
-        forward_date = forward_date.replace(hour = 19)
+        forward_date = forward_date.replace(hour = 18)
     reportDate = forward_date.strftime("%Y-%m-%d %H:%M:%S")
     return reportDate
 
@@ -68,11 +68,11 @@ def getBattleCount():
     weekday = current.weekday()
     hour = current.hour
     ind = 0
-    if hour < 3:
+    if hour < 2:
         ind = 0
-    elif hour < 11:
+    elif hour < 10:
         ind = 1
-    elif hour < 19:
+    elif hour < 18:
         ind = 2
     else:
         ind = 3
